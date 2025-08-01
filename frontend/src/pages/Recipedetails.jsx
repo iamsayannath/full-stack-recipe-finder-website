@@ -8,13 +8,12 @@ function Recipedetails() {
 
   //get data from params
   const id = useParams().id;
-  console.log("id", id);
 
   const { recipeData } = useContext(myContext);
-  console.log("recipeData", recipeData);
+  // find the product based on id
 
-  const product = recipeData.data?.data?.find((item) => item.idMeal === id);
-  console.log(product);
+
+  const product = recipeData.find((item) => item.idMeal === id);
 
 
 

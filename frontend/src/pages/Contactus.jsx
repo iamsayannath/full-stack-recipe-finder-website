@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Contactus() {
 
@@ -20,36 +21,42 @@ function Contactus() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const response = await fetch('https://api.example.com/contact', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    //   });
-    //   if (!response.ok) {
-    //     console.error('Failed to send message');
-    //     return;
-    //   }
-    //   const data = await response.json();
-    //   console.log('server responce:', data);
+    try {
+      const response = await fetch('https://full-stack-recipe-finder-website.onrender.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        console.error('Failed to send message');
+        toast.error('Failed to send message. Please try again later.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+        });
+        return;
+      }
+      const data = await response.json();
+      console.log('server responce:', data);
 
-    //   // Reset form data after successful submission
-    //   setFormData({
-    //     name: '',
-    //     email: '',
-    //     message: ''
-    //   });
-    // } catch (error) {
-    //   console.error('Error sending message:', error);
-    // }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
     console.log('Form submitted:', formData);
     // Reset form data after submission
     setFormData({
       name: '',
       email: '',
       message: ''
+    });
+    toast.success('Message sent successfully!', {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
     });
   };
 

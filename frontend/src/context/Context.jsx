@@ -8,22 +8,26 @@ const Context = ({ children }) => {
 
 
   //fetch recipe data from api
-  const [recipeData, setRecipeData] = useState({});
+  const [recipeData, setRecipeData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchRecipeData = async () => {
+      setLoading(true); // Show spinner
       const options = {
         method: 'GET',
-        url: 'https://full-stack-recipe-finder-website.onrender.com/api/gettallrecipe',
+        url: 'https://full-stack-recipe-finder-website.onrender.com/api/getallrecipe',
         headers: { accept: 'application/json' }
       };
 
       try {
         const { data } = await axios.request(options);
-        setRecipeData(data);
+        // console.log(data.data);
+        setRecipeData(data.data);
       } catch (error) {
         console.error(error);
       }
+      setLoading(false); // Hide spinner
     };
     fetchRecipeData();
   }, []);
@@ -31,8 +35,14 @@ const Context = ({ children }) => {
 
 
 
+
+
+
   const data = {
     recipeData,
+    setRecipeData,
+    loading,
+    setLoading,
   };
   return (
     <myContext.Provider value={data}>

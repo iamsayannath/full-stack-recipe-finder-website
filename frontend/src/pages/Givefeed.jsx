@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Givefeed() {
 
@@ -18,6 +19,30 @@ function Givefeed() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch('https://full-stack-recipe-finder-website.onrender.com/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        console.error('Failed to send message');
+        toast.error('Failed to submit feedback. Please try again later.', {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+        });
+        return;
+      }
+      const data = await response.json();
+      console.log('server responce:', data);
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
     console.log('Form submitted:', formData);
     // Reset form data after submission
     setFormData({
@@ -25,6 +50,12 @@ function Givefeed() {
       email: '',
       recipeName: '',
       feedbackMsg: ''
+    });
+    toast.success('Feedback submitted successfully!', {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
     });
   };
 
