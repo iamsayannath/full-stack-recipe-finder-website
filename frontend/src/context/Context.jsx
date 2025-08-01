@@ -14,8 +14,7 @@ const Context = ({ children }) => {
     const fetchRecipeData = async () => {
       const options = {
         method: 'GET',
-        url: 'https://api.freeapi.app/api/v1/public/meals',
-        params: { page: '1', limit: '25' },
+        url: 'https://full-stack-recipe-finder-website.onrender.com/api/gettallrecipe',
         headers: { accept: 'application/json' }
       };
 
