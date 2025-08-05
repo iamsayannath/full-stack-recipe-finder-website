@@ -11,6 +11,7 @@ const feedbackSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true
   },
   recipeName: {
     type: String,
